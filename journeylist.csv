@@ -1,3 +1,3 @@
 date;km_start;km_end;address_start;destination;private;description;car_brand;car_model;car_license_plate
-11-12-2023;200000;200123;IJsellaan 86, Arnhem;Kanaalweg 86, Utrecht;true;Naar de oefenruimte;Ford;Focus;40-PT-VH
-11-12-2023;200000;200123;IJsellaan 86, Arnhem;Kanaalweg 86, Utrecht;true;Naar de oefenruimte;Ford;Focus;40-PT-VH
+13-12-2023;120000;121000;Groningen;Arnhem;true;Naar de dierentuin;Nissan;Micra;96-RB-RF
+13-12-2023;121000;123000;Arnhem;Den Bosch;false;Meeting met belangrijke mensen;Nissan;Micra;96-RB-RF

@@ -14,7 +14,6 @@ public class Car {
         this.brand = brand;
         this.model = model;
         this.licensePlate = licensePlate;
-        System.out.println("Your new car is a " + this.brand + " " + this.model + " with license plate: " + this.licensePlate);
     }
     public String getCar() {
         return (this.brand + ";" + this.model + ";" + this.licensePlate);

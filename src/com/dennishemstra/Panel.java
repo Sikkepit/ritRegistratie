@@ -1,12 +1,14 @@
 package com.dennishemstra;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Panel extends JPanel {
+public class Panel extends JPanel{
 
 
     Lister lister;
@@ -19,27 +21,20 @@ public class Panel extends JPanel {
         dateField.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
         JTextField kmStartField = new JTextField(5);
-        kmStartField.setText(String.valueOf(lister.getKmEnd()));
+        try {
+            kmStartField.setText(String.valueOf(lister.getKmEnd()));
+        } catch (Exception ignored) {}
 
         JTextField kmEndField = new JTextField(5);
 
         JTextField locationStartField = new JTextField(5);
-        locationStartField.setText(lister.getLastLocation());
+        try {
+            locationStartField.setText(lister.getLastLocation());
+        } catch (Exception ignored) {}
+
 
         JTextField locationDestinationField = new JTextField(5);
         JTextField journeyDescField = new JTextField(5);
-
-        JComboBox<String> journeyVehicleDropDown = new JComboBox<>();
-        journeyVehicleDropDown.setFocusable(false);
-        ArrayList <String> cars = lister.getCarList();
-        for (String car : cars) {
-//            int index = cars.indexOf(car) + 1;
-            journeyVehicleDropDown.addItem(lister.getCarStringFromList(car));
-        }
-
-        JButton submitButton = new JButton("Opslaan");
-        JButton cancelButton = new JButton("Annuleren");
-
 
         JLabel dateLabel = new JLabel("Datum");
         JLabel kmStartLabel = new JLabel("Beginstand (km)");
@@ -50,6 +45,67 @@ public class Panel extends JPanel {
         JLabel privateCheckLabel = new JLabel("Is de rit prive?");
         JLabel journeyVehicleLabel = new JLabel("Voertuig");
         JCheckBox privateCheckField = new JCheckBox("");
+        JComboBox<String> journeyVehicleDropDown = new JComboBox<>();
+        journeyVehicleDropDown.setFocusable(false);
+        ArrayList <String> cars = lister.getCarList();
+        for (String car : cars) {
+            journeyVehicleDropDown.addItem(lister.getCarStringFromList(car));
+        }
+
+        JButton submitButton = new JButton("Opslaan");
+        JButton cancelButton = new JButton("Afsluiten");
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String journeyVehicle = String.valueOf(journeyVehicleDropDown.getSelectedItem());
+                    if (!kmStartField.getText().isEmpty() && !kmEndField.getText().isEmpty() &&
+                        Integer.parseInt(kmStartField.getText()) < Integer.parseInt(kmEndField.getText())) {
+
+
+                        String carToBeSavedBrand = journeyVehicle.split(" ")[0];
+                        String carToBeSavedModel = journeyVehicle.split(" ")[1];
+                        String carToBeSavedLicensePlate = journeyVehicle.split("- ")[1];
+                        Car newCar = new Car();
+                        newCar.addCar(carToBeSavedBrand, carToBeSavedModel, carToBeSavedLicensePlate);
+                        Journey newJourney = new Journey();
+                        newJourney.addJourney(
+                                dateField.getText(),
+                                Integer.parseInt(kmStartField.getText()),
+                                Integer.parseInt(kmEndField.getText()),
+                                locationStartField.getText(),
+                                locationDestinationField.getText(),
+                                privateCheckField.isSelected(),
+                                journeyDescField.getText(),
+                                newCar);
+                        newJourney.saveJourney();
+                        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Rit opgeslagen");
+
+                        kmStartField.setText(kmEndField.getText());
+                        kmEndField.setText("");
+                        locationStartField.setText(locationDestinationField.getText());
+                        locationDestinationField.setText("");
+                        privateCheckField.setSelected(false);
+                        journeyDescField.setText("");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "De opgegeven kilometerstanden zijn onjuist of onvolledig.",
+                                "Foutmelding", JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Oeps! Er ging iets fout. Controleer of je het formulier juist hebt ingevuld.",
+                            "Foutmelding", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
 
         //adjust size and set layout
         setPreferredSize (new Dimension (450, 427));
@@ -98,4 +154,5 @@ public class Panel extends JPanel {
         journeyVehicleLabel.setBounds (40, 285, 100, 25);
 
     }
+
 }

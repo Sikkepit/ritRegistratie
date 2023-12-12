@@ -76,7 +76,4 @@ public class Lister {
     public String getLastLocation() {
         return (lastJourney.split(";"))[4];
     }
-
-
-
 }

@@ -13,7 +13,7 @@ public class Journey {
     private String destinationAddress;
     private  boolean privateJourney;
     private String journeyDescription;
-    private Car journeyVehicle;
+    private Car journeyVehicle = new Car();
 
 
     public void addJourney(String journeyDate, int kmStart, int kmEnd, String startAddress, String destinationAddress, boolean privateJourney, String journeyDescription, Car journeyVehicle) {
