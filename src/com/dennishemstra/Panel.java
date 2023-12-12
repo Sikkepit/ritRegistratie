@@ -16,26 +16,7 @@ public class Panel extends JPanel{
 
         lister = new Lister();
 
-        //construct components and give default values
-        JTextField dateField = new JTextField(5);
-        dateField.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-
-        JTextField kmStartField = new JTextField(5);
-        try {
-            kmStartField.setText(String.valueOf(lister.getKmEnd()));
-        } catch (Exception ignored) {}
-
-        JTextField kmEndField = new JTextField(5);
-
-        JTextField locationStartField = new JTextField(5);
-        try {
-            locationStartField.setText(lister.getLastLocation());
-        } catch (Exception ignored) {}
-
-
-        JTextField locationDestinationField = new JTextField(5);
-        JTextField journeyDescField = new JTextField(5);
-
+        //construct labels
         JLabel dateLabel = new JLabel("Datum");
         JLabel kmStartLabel = new JLabel("Beginstand (km)");
         JLabel kmEndLabel = new JLabel("Eindstand (km)");
@@ -44,17 +25,38 @@ public class Panel extends JPanel{
         JLabel journeyDescLabel = new JLabel("Beschrijving");
         JLabel privateCheckLabel = new JLabel("Is de rit prive?");
         JLabel journeyVehicleLabel = new JLabel("Voertuig");
+
+        //construct components
+        JTextField dateField = new JTextField(5);
+        JTextField kmStartField = new JTextField(5);
+        JTextField kmEndField = new JTextField(5);
+        JTextField locationStartField = new JTextField(5);
+        JTextField locationDestinationField = new JTextField(5);
+        JTextField journeyDescField = new JTextField(5);
         JCheckBox privateCheckField = new JCheckBox("");
         JComboBox<String> journeyVehicleDropDown = new JComboBox<>();
+        JButton submitButton = new JButton("Opslaan");
+        JButton cancelButton = new JButton("Afsluiten");
+
+        //set initial values for dateField, kmStart and locationStart
+        dateField.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+
+        try {
+            kmStartField.setText(String.valueOf(lister.getKmEnd()));
+        } catch (Exception ignored) {}
+
+        try {
+            locationStartField.setText(lister.getLastLocation());
+        } catch (Exception ignored) {}
+
+        // setup cars dropdown
         journeyVehicleDropDown.setFocusable(false);
         ArrayList <String> cars = lister.getCarList();
         for (String car : cars) {
             journeyVehicleDropDown.addItem(lister.getCarStringFromList(car));
         }
 
-        JButton submitButton = new JButton("Opslaan");
-        JButton cancelButton = new JButton("Afsluiten");
-
+        // setup exit-button
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +64,7 @@ public class Panel extends JPanel{
             }
         });
 
+        // setup submit-button
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,11 +100,13 @@ public class Panel extends JPanel{
                         journeyDescField.setText("");
                     }
                     else {
-                        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "De opgegeven kilometerstanden zijn onjuist of onvolledig.",
+                        JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                                "De opgegeven kilometerstanden zijn onjuist of onvolledig.",
                                 "Foutmelding", JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Oeps! Er ging iets fout. Controleer of je het formulier juist hebt ingevuld.",
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
+                            "Oeps! Er ging iets fout. Controleer of je het formulier juist hebt ingevuld.",
                             "Foutmelding", JOptionPane.WARNING_MESSAGE);
                 }
             }

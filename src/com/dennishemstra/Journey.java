@@ -16,7 +16,8 @@ public class Journey {
     private Car journeyVehicle = new Car();
 
 
-    public void addJourney(String journeyDate, int kmStart, int kmEnd, String startAddress, String destinationAddress, boolean privateJourney, String journeyDescription, Car journeyVehicle) {
+    public void addJourney(String journeyDate, int kmStart, int kmEnd, String startAddress, String destinationAddress,
+                           boolean privateJourney, String journeyDescription, Car journeyVehicle) {
         this.journeyDate = journeyDate;
         this.kmStart = kmStart;
         this.kmEnd = kmEnd;
@@ -40,7 +41,8 @@ public class Journey {
             bw.newLine();
             bw.close();
         } catch (IOException e) {
-            System.out.println("Oops, something went wrong. Make sure the .csv file exists and isn't in use by another program.");
+            System.out.println("Oops, something went wrong. " +
+                    "Make sure the .csv file exists and isn't in use by another program.");
         }
     }
 

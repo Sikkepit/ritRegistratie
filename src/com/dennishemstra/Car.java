@@ -27,7 +27,8 @@ public class Car {
             bw.newLine();
             bw.close();
         } catch (IOException e) {
-            System.out.println("Oops, something went wrong. Make sure the .csv file exists and isn't in use by another program.");
+            System.out.println("Oops, something went wrong. " +
+                    "Make sure the .csv file exists and isn't in use by another program.");
         }
     }
 }

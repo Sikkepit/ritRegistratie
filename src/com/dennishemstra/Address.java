@@ -11,7 +11,8 @@ public class Address {
     private String addressPostalCode;
     private String addressCity;
 
-    public void addAddress(String addressLabel, String addressStreet, int addressHouseNumber, String addressPostalCode, String addressCity) {
+    public void addAddress(String addressLabel, String addressStreet, int addressHouseNumber,
+                           String addressPostalCode, String addressCity) {
         this.addressLabel = addressLabel;
         this.addressStreet = addressStreet;
         this.addressHouseNumber = addressHouseNumber;
@@ -32,7 +33,8 @@ public class Address {
             bw.newLine();
             bw.close();
         } catch (IOException e) {
-            System.out.println("Oops, something went wrong. Make sure the .csv file exists and isn't in use by another program.");
+            System.out.println("Oops, something went wrong. " +
+                    "Make sure the .csv file exists and isn't in use by another program.");
         }
     }
 }
